@@ -179,6 +179,9 @@ body{background:var(--bg);color:var(--fg);font-family:var(--font-d);overflow-x:h
 .sv-desc{font-size:13px;font-weight:300;line-height:1.9;color:#555;font-family:var(--font-j);grid-column:2;margin-top:12px;display:none}
 .sv-item.active .sv-desc{display:block;color:rgba(247,245,240,.72)}
 .sv-arrow{font-size:18px;color:var(--ghost);transition:transform .2s;padding-top:3px}
+.sv-link-item{display:block;color:rgba(247,245,240,.85);text-decoration:none;padding:8px 0;border-bottom:1px solid rgba(247,245,240,.15);font-size:13px;font-weight:400;letter-spacing:.02em;transition:color .2s}
+.sv-link-item:last-child{border-bottom:0}
+.sv-link-item:hover{color:#fff}
 .sv-item.active .sv-arrow{transform:rotate(45deg);color:rgba(247,245,240,.45)}
 .talent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:2px}
 .talent-card{border:1px solid var(--line);overflow:hidden;cursor:pointer;transition:border-color .2s}
@@ -276,6 +279,7 @@ footer{border-top:1px solid var(--line);padding:20px var(--pad);display:flex;jus
         <div class="sv-item" data-sv><div class="sv-n">02</div><div><div class="sv-name">Talent Management</div><div class="sv-copy">We build iconic careers.</div><div class="sv-desc">所属タレントの案件管理・マネジメント・ブランディングを担当。</div></div><span class="sv-arrow">+</span></div>
         <div class="sv-item" data-sv><div class="sv-n">03</div><div><div class="sv-name">Casting</div><div class="sv-copy">The right face, always.</div><div class="sv-desc">ブランド・映像・イベントなど、目的に合った人材を選定・手配。</div></div><span class="sv-arrow">+</span></div>
         <div class="sv-item" data-sv><div class="sv-n">04</div><div><div class="sv-name">Brand Strategy</div><div class="sv-copy">Culture by design.</div><div class="sv-desc">SNS運用、コンテンツ制作、ブランドコミュニケーション全般を支援。</div></div><span class="sv-arrow">+</span></div>
+        <div class="sv-item" data-sv><div class="sv-n">05</div><div><div class="sv-name">Other</div><div class="sv-copy">More services &amp; solutions.</div><div class="sv-desc"><a href="https://goodvibesagency.tokyo/gva-ugc-lp/" class="sv-link-item" target="_blank">UGC 口コミ施策 →</a><a href="https://goodvibesagency.tokyo/gva-kuchikomi-lp/" class="sv-link-item" target="_blank">レビュー口コミ施策 →</a><a href="https://goodvibesagency.tokyo/gva-line-manager-lp/" class="sv-link-item" target="_blank">インフルエンサー専属LINEマネージャー →</a></div></div><span class="sv-arrow">+</span></div>
       </div>
     </div></div></div>
   </section>
