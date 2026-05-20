@@ -407,12 +407,12 @@ footer{border-top:1px solid var(--line);padding:20px var(--pad);display:flex;jus
         <input type="hidden" name="subject" value="GVAコーポレートサイト お問い合わせ">
         <input type="hidden" name="redirect" value="https://goodvibesagency.tokyo/?sent=1">
         <div class="form-row">
-          <div class="form-field"><label class="form-label">お名前</label><input type="text" class="form-input" placeholder="山田 太郎"></div>
-          <div class="form-field"><label class="form-label">会社名</label><input type="text" class="form-input" placeholder="株式会社〇〇"></div>
+          <div class="form-field"><label class="form-label">お名前</label><input type="text" name="name" class="form-input" placeholder="山田 太郎" required></div>
+          <div class="form-field"><label class="form-label">会社名</label><input type="text" name="company" class="form-input" placeholder="株式会社〇〇"></div>
         </div>
-        <div class="form-field"><label class="form-label">メールアドレス</label><input type="email" class="form-input" placeholder="info@example.com"></div>
-        <div class="form-field"><label class="form-label">お問い合わせ種別</label><div class="form-select-wrap"><select class="form-select"><option value="" disabled selected>選択してください</option><option>クリエイターマーケティング</option><option>タレントマネジメント</option><option>キャスティング</option><option>その他</option></select><span class="form-select-arrow">▾</span></div></div>
-        <div class="form-field"><label class="form-label">内容</label><textarea class="form-textarea" placeholder="お問い合わせ内容をご記入ください"></textarea></div>
+        <div class="form-field"><label class="form-label">メールアドレス</label><input type="email" name="email" class="form-input" placeholder="info@example.com" required></div>
+        <div class="form-field"><label class="form-label">お問い合わせ種別</label><div class="form-select-wrap"><select name="inquiry_type" class="form-select" required><option value="" disabled selected>選択してください</option><option>クリエイターマーケティング</option><option>タレントマネジメント</option><option>キャスティング</option><option>その他</option></select><span class="form-select-arrow">▾</span></div></div>
+        <div class="form-field"><label class="form-label">内容</label><textarea name="message" class="form-textarea" placeholder="お問い合わせ内容をご記入ください" required></textarea></div>
         <button type="submit" class="form-submit">Send Message →</button>
       </form>
     </div></div></div>
