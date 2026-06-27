@@ -8,53 +8,79 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:#0f0f1a;color:#fff;font-family:-apple-system,Helvetica,sans-serif;min-height:100vh}
-    .hd{background:linear-gradient(135deg,#ff69b4,#e91e8c);padding:14px 20px;text-align:center}
-    .hd h1{font-size:16px;font-weight:800}
-    .hd p{font-size:11px;opacity:.75;margin-top:2px}
-    /* モードバッジ */
-    .mode-badge{
-      text-align:center;padding:7px 10px;font-size:12px;font-weight:800;
-      letter-spacing:2px;background:#111;color:#ff69b4;
-      transition:color .3s;
+
+    /* ヘッダー */
+    .hd{background:linear-gradient(135deg,#ff69b4,#e91e8c);padding:12px 20px;text-align:center}
+    .hd h1{font-size:15px;font-weight:800}
+    .hd p{font-size:10px;opacity:.75;margin-top:2px}
+
+    /* 3種別サマリー（常時表示） */
+    .summary{display:flex;background:#0a0a1a;padding:8px;gap:6px}
+    .sum-card{
+      flex:1;border-radius:10px;padding:8px 4px;text-align:center;
+      border:1px solid rgba(255,255,255,.06);background:#131320;
+      transition:all .3s;
     }
-    /* 統計 */
-    .stats{display:flex;background:#16213e;padding:10px;gap:8px}
-    .stat{flex:1;background:#0d0d2e;border-radius:10px;padding:8px 4px;text-align:center}
-    .stat .n{font-size:20px;font-weight:800;color:#ff69b4;line-height:1;transition:color .3s}
-    .stat .l{font-size:10px;color:#555;margin-top:2px}
+    .sum-card.active{border-width:2px;transform:scale(1.04)}
+    .sum-label{font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:4px;opacity:.7}
+    .sum-nums{font-size:18px;font-weight:800;line-height:1}
+    .sum-sub{font-size:9px;color:#555;margin-top:2px}
+
+    /* インフルエンサー=ピンク / メディア=水色 / リテール=緑 */
+    .influencer .sum-label{color:#ff69b4}
+    .influencer .sum-nums {color:#ff69b4}
+    .influencer.active    {border-color:#ff69b4;box-shadow:0 0 10px rgba(255,105,180,.25)}
+    .media .sum-label{color:#4fc3f7}
+    .media .sum-nums {color:#4fc3f7}
+    .media.active    {border-color:#4fc3f7;box-shadow:0 0 10px rgba(79,195,247,.25)}
+    .retail .sum-label{color:#81c784}
+    .retail .sum-nums {color:#81c784}
+    .retail.active    {border-color:#81c784;box-shadow:0 0 10px rgba(129,199,132,.25)}
+
+    /* スキャン中の種別インジケーター */
+    .mode-bar{
+      text-align:center;padding:5px;font-size:11px;font-weight:800;
+      letter-spacing:1px;background:#111;color:#fff;
+      transition:color .3s, background .3s;
+      min-height:26px;
+    }
+
     /* カメラ */
     .cam-wrap{position:relative;width:100%;max-width:500px;margin:0 auto}
     #video{width:100%;display:block;background:#000}
     .scan-frame{
       position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-      width:220px;height:220px;border-radius:12px;
+      width:200px;height:200px;border-radius:12px;
       box-shadow:0 0 0 9999px rgba(0,0,0,.5);pointer-events:none;
       border:3px solid #ff69b4;transition:border-color .3s;
     }
     .scan-line{
       position:absolute;top:0;left:0;width:100%;height:3px;
       background:linear-gradient(90deg,transparent,#ff69b4,transparent);
-      transition:background .3s;
-      animation:scan 2s linear infinite
+      transition:background .3s;animation:scan 2s linear infinite
     }
     @keyframes scan{0%{top:0}100%{top:100%}}
-    .cam-msg{text-align:center;padding:10px;font-size:13px;color:#666;min-height:32px}
+    .cam-msg{text-align:center;padding:8px;font-size:12px;color:#555;min-height:28px}
     #canvas{display:none}
+
     /* 結果オーバーレイ */
-    #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:99;align-items:center;justify-content:center;padding:20px}
+    #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:99;align-items:center;justify-content:center;padding:20px}
     #overlay.show{display:flex}
-    .card{background:#1c1c3a;border-radius:20px;padding:30px 24px;max-width:340px;width:100%;text-align:center}
-    .ico{font-size:56px}
-    .nm{font-size:22px;font-weight:800;color:#fff;margin:10px 0 6px;word-break:break-all}
-    .sl{font-size:14px;color:#aaa;margin-bottom:5px}
-    .tm{font-size:13px;color:#666}
-    .sns-box{font-size:12px;color:#ff69b4;margin-top:12px;word-break:break-all;padding:8px 12px;background:rgba(255,105,180,.1);border-radius:8px}
-    .type-badge{font-size:11px;font-weight:800;letter-spacing:1px;margin-top:12px;padding:5px 14px;border-radius:20px;display:inline-block}
+    .card{background:#1c1c3a;border-radius:20px;padding:28px 22px;max-width:340px;width:100%;text-align:center}
+    .ico{font-size:52px}
+    .type-pill{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1px;
+               padding:4px 12px;border-radius:20px;margin:8px 0}
+    .nm{font-size:21px;font-weight:800;color:#fff;margin:8px 0 5px;word-break:break-all}
+    .sl{font-size:13px;color:#aaa;margin-bottom:4px}
+    .tm{font-size:12px;color:#666}
+    .sns-box{font-size:11px;margin-top:10px;word-break:break-all;padding:7px 10px;border-radius:8px}
     .card.success {border:2px solid #00cc66}
     .card.already {border:2px solid #ffcc00}
     .card.notfound{border:2px solid #ff4444}
     .card.loading {border:2px solid #555}
-    .next-btn{display:block;width:100%;margin-top:18px;background:#ff69b4;color:#fff;border:none;border-radius:12px;padding:14px;font-size:16px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent}
+    .next-btn{display:block;width:100%;margin-top:16px;background:#ff69b4;color:#fff;
+              border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:700;
+              cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .3s}
   </style>
 </head>
 <body>
@@ -64,14 +90,26 @@
   <p>PHOEBE BEAUTY UP x Barbie 新作発表会</p>
 </div>
 
-<div class="mode-badge" id="modeBadge">📷 QRコードをスキャン</div>
-
-<div class="stats">
-  <div class="stat"><div class="n" id="sTotal">-</div><div class="l">総登録者</div></div>
-  <div class="stat"><div class="n" id="sCin">-</div><div class="l">入場済み</div></div>
-  <div class="stat"><div class="n" id="sRem">-</div><div class="l">未入場</div></div>
-  <div class="stat"><div class="n" id="sComp">-</div><div class="l">同伴済み</div></div>
+<!-- 3種別 常時統計 -->
+<div class="summary">
+  <div class="sum-card influencer active" id="card-influencer">
+    <div class="sum-label">🩷 INFLUENCER</div>
+    <div class="sum-nums" id="inf-cin">-</div>
+    <div class="sum-sub">/ <span id="inf-total">-</span> 名</div>
+  </div>
+  <div class="sum-card media" id="card-media">
+    <div class="sum-label">💙 MEDIA</div>
+    <div class="sum-nums" id="med-cin">-</div>
+    <div class="sum-sub">/ <span id="med-total">-</span> 名</div>
+  </div>
+  <div class="sum-card retail" id="card-retail">
+    <div class="sum-label">💚 RETAIL</div>
+    <div class="sum-nums" id="ret-cin">-</div>
+    <div class="sum-sub">/ <span id="ret-total">-</span> 名</div>
+  </div>
 </div>
+
+<div class="mode-bar" id="modeBar">📷 QRコードをスキャンしてください</div>
 
 <div class="cam-wrap">
   <video id="video" autoplay playsinline muted></video>
@@ -81,87 +119,92 @@
 <p class="cam-msg" id="camMsg">カメラを起動中...</p>
 
 <div id="overlay">
-  <div class="card" id="card">
+  <div class="card" id="resultCard">
     <div class="ico" id="ico"></div>
-    <div class="nm"  id="nm"></div>
-    <div class="sl"  id="sl"></div>
-    <div class="tm"  id="tm"></div>
+    <div class="type-pill" id="typePill"></div>
+    <div class="nm" id="nm"></div>
+    <div class="sl" id="sl"></div>
+    <div class="tm" id="tm"></div>
     <div class="sns-box" id="snsBox" style="display:none"></div>
-    <div class="type-badge" id="typeBadge" style="display:none"></div>
     <button class="next-btn" id="nextBtn" onclick="closeResult()">次の方へ</button>
   </div>
 </div>
 
 <script>
-// ─────────────────────────────────────────────────────────────
-// GAS URL → 種別マッピング（QRに含まれるURLから自動判別）
-// ─────────────────────────────────────────────────────────────
-var GAS_MAP = {
-  'AKfycbxSqFWg2xqlfD3WFdXvJRR6ZD6fgmITobVnvEM3lC2xODHI__xM1WkMSlPcZZcLS2-h': {
-    type: 'influencer', label: '🩷 INFLUENCER', accent: '#ff69b4',
-    url: 'https://script.google.com/macros/s/AKfycbxSqFWg2xqlfD3WFdXvJRR6ZD6fgmITobVnvEM3lC2xODHI__xM1WkMSlPcZZcLS2-h/exec'
+// ─── GAS設定 ───
+var GAS = {
+  influencer: {
+    id: 'AKfycbxSqFWg2xqlfD3WFdXvJRR6ZD6fgmITobVnvEM3lC2xODHI__xM1WkMSlPcZZcLS2-h',
+    url: 'https://script.google.com/macros/s/AKfycbxSqFWg2xqlfD3WFdXvJRR6ZD6fgmITobVnvEM3lC2xODHI__xM1WkMSlPcZZcLS2-h/exec',
+    label: '🩷 INFLUENCER', accent: '#ff69b4', snsPrefix: 'SNS: '
   },
-  'AKfycbzFO0_ITDBS0fwKt45Os-z98Cgo6g0SiNd5pk6GAuHrq47x_M8gAAZsykJnFktXlQ6Kuw': {
-    type: 'media', label: '💙 MEDIA', accent: '#4fc3f7',
-    url: 'https://script.google.com/macros/s/AKfycbzFO0_ITDBS0fwKt45Os-z98Cgo6g0SiNd5pk6GAuHrq47x_M8gAAZsykJnFktXlQ6Kuw/exec'
+  media: {
+    id: 'AKfycbzFO0_ITDBS0fwKt45Os-z98Cgo6g0SiNd5pk6GAuHrq47x_M8gAAZsykJnFktXlQ6Kuw',
+    url: 'https://script.google.com/macros/s/AKfycbzFO0_ITDBS0fwKt45Os-z98Cgo6g0SiNd5pk6GAuHrq47x_M8gAAZsykJnFktXlQ6Kuw/exec',
+    label: '💙 MEDIA', accent: '#4fc3f7', snsPrefix: ''
   },
-  'AKfycbx1--LiHzZzohdMxDHYKsCpwmO3aLJN_jp4_Ap7efFXMEhqOZDZVoKG5DZ9HdgPi1P6EA': {
-    type: 'retail', label: '💚 RETAIL', accent: '#81c784',
-    url: 'https://script.google.com/macros/s/AKfycbx1--LiHzZzohdMxDHYKsCpwmO3aLJN_jp4_Ap7efFXMEhqOZDZVoKG5DZ9HdgPi1P6EA/exec'
+  retail: {
+    id: 'AKfycbx1--LiHzZzohdMxDHYKsCpwmO3aLJN_jp4_Ap7efFXMEhqOZDZVoKG5DZ9HdgPi1P6EA',
+    url: 'https://script.google.com/macros/s/AKfycbx1--LiHzZzohdMxDHYKsCpwmO3aLJN_jp4_Ap7efFXMEhqOZDZVoKG5DZ9HdgPi1P6EA/exec',
+    label: '💚 RETAIL', accent: '#81c784', snsPrefix: ''
   }
 };
 
-// QRのURLからGAS設定を特定する
-function detectGasFromUrl(qrData) {
-  for (var key in GAS_MAP) {
-    if (qrData.indexOf(key) !== -1) return GAS_MAP[key];
+// QRのURLからGAS種別を判別
+function detectType(qrData) {
+  for (var key in GAS) {
+    if (qrData.indexOf(GAS[key].id) !== -1) return key;
   }
   return null;
 }
 
-// アクセントカラーを更新
+// アクセントカラー更新
 function setAccent(accent) {
   document.getElementById('scanFrame').style.borderColor = accent;
   document.getElementById('scanLine').style.background =
     'linear-gradient(90deg,transparent,' + accent + ',transparent)';
-  document.getElementById('modeBadge').style.color = accent;
-  var ns = document.querySelectorAll('.stat .n');
-  ns.forEach(function(n){ n.style.color = accent; });
+  document.getElementById('modeBar').style.color = accent;
   document.getElementById('nextBtn').style.background = accent;
 }
 
-// 統計表示
-var lastGasUrl = GAS_MAP['AKfycbxSqFWg2xqlfD3WFdXvJRR6ZD6fgmITobVnvEM3lC2xODHI__xM1WkMSlPcZZcLS2-h'].url;
-function loadStats(gasUrl) {
-  if (gasUrl) lastGasUrl = gasUrl;
-  fetch(lastGasUrl + '?api=1')
-    .then(function(r){ return r.json(); })
-    .then(function(d) {
-      document.getElementById('sTotal').textContent = d.total     || 0;
-      document.getElementById('sCin').textContent   = d.cin       || 0;
-      document.getElementById('sRem').textContent   = (d.total||0)-(d.cin||0);
-      document.getElementById('sComp').textContent  = (d.cinComp||0)+'/'+(d.totalComp||0);
-    }).catch(function(){});
+// サマリーカードのアクティブ状態
+function setActiveCard(type) {
+  ['influencer','media','retail'].forEach(function(t) {
+    var el = document.getElementById('card-' + t);
+    if (t === type) el.classList.add('active');
+    else el.classList.remove('active');
+  });
 }
 
-// ─────────────────────────────────────────────────────────────
-// カメラ起動
-// ─────────────────────────────────────────────────────────────
+// ─── 統計読み込み（3種別同時） ───
+function loadAllStats() {
+  Object.keys(GAS).forEach(function(key) {
+    var cfg = GAS[key];
+    fetch(cfg.url + '?api=1')
+      .then(function(r){ return r.json(); })
+      .then(function(d) {
+        var cinEl   = document.getElementById(key.substring(0,3) + '-cin');
+        var totEl   = document.getElementById(key.substring(0,3) + '-total');
+        if (cinEl)  cinEl.textContent  = d.cin   || 0;
+        if (totEl)  totEl.textContent  = d.total || 0;
+      }).catch(function(){});
+  });
+}
+
+// ─── カメラ起動 ───
 var video  = document.getElementById('video');
 var canvas = document.getElementById('canvas');
 var ctx    = canvas.getContext('2d');
-var camMsg = document.getElementById('camMsg');
 var busy   = false;
 
 navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
   .then(function(stream) {
     video.srcObject = stream; video.play();
-    camMsg.textContent = 'QRコードを枠内に合わせてください';
+    document.getElementById('camMsg').textContent = 'QRコードを枠内に合わせてください';
     requestAnimationFrame(tick);
   })
-  .catch(function(err) {
-    camMsg.textContent = 'カメラ権限を許可してページを再読込してください';
-    console.error(err);
+  .catch(function() {
+    document.getElementById('camMsg').textContent = 'カメラ権限を許可してページを再読込してください';
   });
 
 function tick() {
@@ -172,99 +215,96 @@ function tick() {
     var code = jsQR(d.data, d.width, d.height, { inversionAttempts: 'dontInvert' });
     if (code) {
       busy = true;
-      showResult('loading', '', '処理中...', '', '', '', null);
+      showResult('loading','','処理中...','','','',null);
       processQR(code.data);
     }
   }
   requestAnimationFrame(tick);
 }
 
-// ─────────────────────────────────────────────────────────────
-// QR処理（GASを自動判別）
-// ─────────────────────────────────────────────────────────────
+// ─── QR処理 ───
 function processQR(data) {
-  // QRのURLからGAS種別を自動判別
-  var gasCfg = detectGasFromUrl(data);
-
-  if (!gasCfg) {
-    showResult('notfound', '', 'QRコード不明', 'このQRはGVAのものではありません', '', '', null);
-    setTimeout(function(){ closeResult(); busy = false; }, 3000);
+  var type = detectType(data);
+  if (!type) {
+    showResult('notfound','','QRコード不明','このQRはGVAのものではありません','','',null);
+    setTimeout(function(){ closeResult(); busy=false; }, 3000);
     return;
   }
 
-  // 種別に合わせてアクセントカラーを変更
-  setAccent(gasCfg.accent);
-  document.getElementById('modeBadge').textContent = gasCfg.label + ' MODE';
-  loadStats(gasCfg.url);
+  var cfg = GAS[type];
+  setAccent(cfg.accent);
+  setActiveCard(type);
+  document.getElementById('modeBar').textContent = cfg.label + ' MODE';
 
-  // IDとtypeを抽出
-  var id = '', type = 'main';
+  var id='', qrType='main';
   try {
     var u = new URL(data);
-    id   = u.searchParams.get('id')   || '';
-    type = u.searchParams.get('type') || 'main';
-  } catch(e) { id = data; }
+    id     = u.searchParams.get('id')   || '';
+    qrType = u.searchParams.get('type') || 'main';
+  } catch(e){ id = data; }
 
   if (!id) {
-    showResult('notfound', '', 'QRコード不明', 'スタッフに確認してください', '', '', gasCfg);
-    setTimeout(function(){ closeResult(); busy = false; }, 3000);
+    showResult('notfound','','QRコード不明','スタッフに確認してください','','',cfg);
+    setTimeout(function(){ closeResult(); busy=false; }, 3000);
     return;
   }
 
-  var apiUrl = gasCfg.url + '?api=1&id=' + encodeURIComponent(id) + '&type=' + encodeURIComponent(type);
-
-  function doFetch(retryCount) {
-    fetch(apiUrl, { redirect: 'follow' })
-      .then(function(res){ return res.json(); })
+  function doFetch(retry) {
+    fetch(cfg.url + '?api=1&id=' + encodeURIComponent(id) + '&type=' + encodeURIComponent(qrType), { redirect:'follow' })
+      .then(function(r){ return r.json(); })
       .then(function(r) {
-        if      (r.ok === 'success') showResult('success', '', r.name, r.slot, '入場: ' + r.time, r.snsUrl || '', gasCfg);
-        else if (r.ok === 'already') showResult('already', '', r.name, r.slot, '入場済み: ' + r.time, r.snsUrl || '', gasCfg);
-        else                         showResult('notfound','', 'QRコード不明','スタッフに確認してください','', '', gasCfg);
-        loadStats(gasCfg.url);
+        if      (r.ok==='success') showResult('success','',r.name,r.slot,'入場: '+r.time,r.snsUrl||'',cfg);
+        else if (r.ok==='already') showResult('already','',r.name,r.slot,'入場済み: '+r.time,r.snsUrl||'',cfg);
+        else                       showResult('notfound','','QRコード不明','スタッフに確認してください','','',cfg);
+        loadAllStats();
       })
-      .catch(function(err) {
-        if (retryCount > 0) {
-          setTimeout(function(){ doFetch(retryCount - 1); }, 1000);
-        } else {
-          showResult('already', '', '通信エラー', '下のボタンで確認してください', '', '', gasCfg);
-          var btn = document.getElementById('nextBtn');
-          btn.textContent = 'GASで確認する';
-          btn.onclick = function() {
-            window.open(data + (data.indexOf('?')>=0?'&':'?') + '_ts=' + Date.now(), '_blank');
-            btn.textContent = '次の方へ'; btn.onclick = function(){ closeResult(); };
-            closeResult(); busy = false;
-          };
-        }
+      .catch(function() {
+        if (retry > 0) { setTimeout(function(){ doFetch(retry-1); }, 1000); return; }
+        showResult('already','','通信エラー','下のボタンで確認してください','','',cfg);
+        var btn = document.getElementById('nextBtn');
+        btn.textContent = 'GASで確認する';
+        btn.onclick = function() {
+          window.open(data+(data.indexOf('?')>=0?'&':'?')+'_ts='+Date.now(),'_blank');
+          btn.textContent='次の方へ'; btn.onclick=function(){closeResult();};
+          closeResult(); busy=false;
+        };
       });
   }
   doFetch(1);
 }
 
-// ─────────────────────────────────────────────────────────────
-// 結果表示（種別バッジ付き）
-// ─────────────────────────────────────────────────────────────
-function showResult(type, ico, nm, sl, tm, sns, gasCfg) {
-  var icons = { success:'✅', already:'⚠️', notfound:'❌', loading:'⏳' };
-  var c = document.getElementById('card');
-  c.className = 'card ' + type;
-  document.getElementById('ico').textContent = icons[type] || '';
+// ─── 結果表示 ───
+function showResult(type, ico, nm, sl, tm, sns, cfg) {
+  var icons={success:'✅',already:'⚠️',notfound:'❌',loading:'⏳'};
+  document.getElementById('resultCard').className='card '+type;
+  document.getElementById('ico').textContent = icons[type]||'';
   document.getElementById('nm').textContent  = nm;
   document.getElementById('sl').textContent  = sl;
   document.getElementById('tm').textContent  = tm;
-  var sEl = document.getElementById('snsBox');
-  if (sns) { sEl.textContent = sns; sEl.style.display = 'block'; }
-  else     { sEl.textContent = ''; sEl.style.display = 'none'; }
-  // 種別バッジ
-  var badge = document.getElementById('typeBadge');
-  if (gasCfg) {
-    badge.textContent = gasCfg.label;
-    badge.style.background = gasCfg.accent + '33';
-    badge.style.color = gasCfg.accent;
-    badge.style.display = 'inline-block';
+
+  // 種別ピル
+  var pill = document.getElementById('typePill');
+  if (cfg && type !== 'loading') {
+    pill.textContent = cfg.label;
+    pill.style.background = cfg.accent + '28';
+    pill.style.color = cfg.accent;
+    pill.style.display = 'inline-block';
   } else {
-    badge.style.display = 'none';
+    pill.style.display = 'none';
   }
-  document.getElementById('nextBtn').style.display = (type === 'loading') ? 'none' : 'block';
+
+  // SNSボックス
+  var sEl = document.getElementById('snsBox');
+  if (sns) {
+    sEl.textContent = (cfg && cfg.snsPrefix ? cfg.snsPrefix : '') + sns;
+    sEl.style.display = 'block';
+    sEl.style.background = cfg ? cfg.accent+'18' : 'rgba(255,255,255,.05)';
+    sEl.style.color = cfg ? cfg.accent : '#aaa';
+  } else {
+    sEl.style.display = 'none';
+  }
+
+  document.getElementById('nextBtn').style.display = (type==='loading')?'none':'block';
   document.getElementById('overlay').classList.add('show');
 }
 
@@ -273,9 +313,9 @@ function closeResult() {
   busy = false;
 }
 
-// 初期統計読み込み
-loadStats();
-setInterval(function(){ loadStats(); }, 30000);
+// ─── 初期化 ───
+loadAllStats();
+setInterval(loadAllStats, 20000);
 </script>
 </body>
 </html>
