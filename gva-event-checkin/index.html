@@ -136,12 +136,12 @@ var GAS_URLS = {
 
   // メディア（GASデプロイ後にここを差し替えてください）
   // ▼▼▼ Code_media.gs をGASにデプロイし、発行されたURLをここに貼り付けてください ▼▼▼
-  media: 'MEDIA_GAS_URL',
+  media: 'https://script.google.com/macros/s/AKfycbzFO0_ITDBS0fwKt45Os-z98Cgo6g0SiNd5pk6GAuHrq47x_M8gAAZsykJnFktXlQ6Kuw/exec',
   // ▲▲▲ 差し替え箇所 ▲▲▲
 
   // リテール（GASデプロイ後にここを差し替えてください）
   // ▼▼▼ Code_retail.gs をGASにデプロイし、発行されたURLをここに貼り付けてください ▼▼▼
-  retail: 'RETAIL_GAS_URL',
+  retail: 'https://script.google.com/macros/s/AKfycbx1--LiHzZzohdMxDHYKsCpwmO3aLJN_jp4_Ap7efFXMEhqOZDZVoKG5DZ9HdgPi1P6EA/exec',
   // ▲▲▲ 差し替え箇所 ▲▲▲
 };
 
@@ -221,7 +221,7 @@ function tick() {
     if (code) {
       // GAS URLが未設定なら警告
       var gasUrl = GAS_URLS[currentTab];
-      if (gasUrl === 'MEDIA_GAS_URL' || gasUrl === 'RETAIL_GAS_URL') {
+      if (gasUrl === 'https://script.google.com/macros/s/AKfycbzFO0_ITDBS0fwKt45Os-z98Cgo6g0SiNd5pk6GAuHrq47x_M8gAAZsykJnFktXlQ6Kuw/exec' || gasUrl === 'https://script.google.com/macros/s/AKfycbx1--LiHzZzohdMxDHYKsCpwmO3aLJN_jp4_Ap7efFXMEhqOZDZVoKG5DZ9HdgPi1P6EA/exec') {
         showResult('notfound', '', 'GAS URL 未設定', currentTab + ' のGASがまだデプロイされていません', '', '');
         setTimeout(function(){ closeResult(); busy = false; }, 3000);
         return;
@@ -311,7 +311,7 @@ function closeResult() {
 // ─────────────────────────────────────────────────────────────
 function loadStats() {
   var gasUrl = GAS_URLS[currentTab];
-  if (gasUrl === 'MEDIA_GAS_URL' || gasUrl === 'RETAIL_GAS_URL') return;
+  if (gasUrl === 'https://script.google.com/macros/s/AKfycbzFO0_ITDBS0fwKt45Os-z98Cgo6g0SiNd5pk6GAuHrq47x_M8gAAZsykJnFktXlQ6Kuw/exec' || gasUrl === 'https://script.google.com/macros/s/AKfycbx1--LiHzZzohdMxDHYKsCpwmO3aLJN_jp4_Ap7efFXMEhqOZDZVoKG5DZ9HdgPi1P6EA/exec') return;
   fetch(gasUrl + '?api=1')
     .then(function(r){ return r.json(); })
     .then(function(d) {
