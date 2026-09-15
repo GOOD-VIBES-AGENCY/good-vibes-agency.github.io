@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>GOOD VIBES AGENCY｜お仕事のご相談</title>
+<link rel="icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  :root{ color-scheme: light dark; }
+  body{ margin:0; min-height:100dvh; display:flex; align-items:center; justify-content:center;
+        background:#f4f4f5; color:#1a1a1a; padding:24px;
+        font-family:"Hiragino Sans","Yu Gothic",system-ui,sans-serif; line-height:1.8; }
+  @media (prefers-color-scheme: dark){
+    body{ background:#101312; color:#e8ebe9; }
+    .card{ background:#181d1b !important; box-shadow:none !important; }
+    .sub{ color:#9aa5a0 !important; }
+  }
+  .card{ background:#fff; border-radius:12px; padding:36px 28px; max-width:420px; width:100%;
+         text-align:center; box-shadow:0 1px 3px rgba(0,0,0,.08); }
+  img{ width:56px; height:56px; border-radius:12px; }
+  h1{ font-size:17px; margin:18px 0 6px; font-weight:700; }
+  .sub{ color:#666; font-size:13.5px; margin:0; }
+  .bar{ height:3px; border-radius:2px; background:#e3e3e3; overflow:hidden; margin-top:22px; }
+  .bar i{ display:block; height:100%; width:40%; background:#1a7f4b; border-radius:2px;
+          animation:slide 1.1s ease-in-out infinite; }
+  @keyframes slide{ 0%{ transform:translateX(-100%) } 100%{ transform:translateX(250%) } }
+  @media (prefers-reduced-motion:reduce){ .bar i{ animation:none; width:100%; } }
+  a{ color:#1a7f4b; }
+  .hide{ display:none; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <img src="/favicon.png" alt="GOOD VIBES AGENCY">
+    <h1>GOOD VIBES AGENCY</h1>
+    <p class="sub" id="msg">お仕事のご相談ページを開いています…</p>
+    <div class="bar" id="bar"><i></i></div>
+    <p class="sub hide" id="manual" style="margin-top:20px">
+      自動で開かない場合は <a id="link" href="#">こちらをタップ</a>してください。
+    </p>
+  </div>
+
+<script>
+(function () {
+  // 可否確認ページの入口。トークンは # の後ろに置くため、
+  // このページのサーバ（GitHub Pages）には送られない
+  var APP = 'https://script.google.com/macros/s/AKfycbwDwMFr-W3UotjTGicUKoOzyxCYDlQNhLd9K3g7DKc3NtaE8OF_gb8mfSiY7VYcsBe3/exec';
+
+  var token = (location.hash || '').replace(/^#/, '');
+  if (!token) {
+    var q = new URLSearchParams(location.search);
+    token = q.get('t') || '';
+  }
+
+  if (!/^[A-Za-z0-9._~-]{20,600}$/.test(token)) {
+    document.getElementById('msg').textContent =
+      'リンクが正しく開けませんでした。お送りしたメッセージから、もう一度お開きください。';
+    document.getElementById('bar').classList.add('hide');
+    return;
+  }
+
+  var url = APP + '?t=' + encodeURIComponent(token);
+  var a = document.getElementById('link');
+  a.href = url;
+
+  // 自動で飛ばないブラウザのために、手動のリンクも出しておく
+  setTimeout(function () {
+    document.getElementById('manual').classList.remove('hide');
+  }, 2500);
+
+  location.replace(url);     // 履歴に残さない。戻るでここに戻らせない
+})();
+</script>
+</body>
+</html>
