@@ -6,6 +6,13 @@
 <meta name="robots" content="noindex, nofollow">
 <title>GOOD VIBES AGENCY｜お仕事のご相談</title>
 <link rel="icon" href="/favicon.ico">
+<!-- DM やメッセージアプリで出るプレビュー。ここで会社が分かると開いてもらえる -->
+<meta property="og:site_name" content="GOOD VIBES AGENCY">
+<meta property="og:title" content="お仕事のご相談｜GOOD VIBES AGENCY">
+<meta property="og:description" content="ご依頼内容のご確認ページです。リンクはご本人専用です。">
+<meta property="og:image" content="https://goodvibesagency.tokyo/ogp.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <style>
   :root{ color-scheme: light dark; }
@@ -54,7 +61,7 @@
     token = q.get('t') || '';
   }
 
-  if (!/^[A-Za-z0-9._~-]{20,600}$/.test(token)) {
+  if (!/^[A-Za-z0-9._-]{10,300}$/.test(token)) {
     document.getElementById('msg').textContent =
       'リンクが正しく開けませんでした。お送りしたメッセージから、もう一度お開きください。';
     document.getElementById('bar').classList.add('hide');
